@@ -41,6 +41,7 @@ import org.jetbrains.kotlin.psi.psiUtil.getNonStrictParentOfType
 import org.jetbrains.kotlin.psi.psiUtil.getParentOfType
 import org.jetbrains.kotlin.resolve.*
 import org.jetbrains.kotlin.resolve.calls.smartcasts.DataFlowInfo
+import org.jetbrains.kotlin.resolve.checkers.PlatformDiagnosticSuppressor
 import org.jetbrains.kotlin.resolve.lazy.*
 import org.jetbrains.kotlin.resolve.lazy.descriptors.LazyClassDescriptor
 import org.jetbrains.kotlin.resolve.lazy.descriptors.LazyScriptDescriptor
@@ -349,7 +350,9 @@ class ResolveElementCache(
         }
 
         val controlFlowTrace = DelegatingBindingTrace(trace.bindingContext, "Element control flow resolve", resolveElement, allowSliceRewrite = true)
-        ControlFlowInformationProvider(resolveElement, controlFlowTrace, resolveElement.languageVersionSettings).checkDeclaration()
+        ControlFlowInformationProvider(
+                resolveElement, controlFlowTrace, resolveElement.languageVersionSettings, PlatformDiagnosticSuppressor.Default
+        ).checkDeclaration()
         controlFlowTrace.addOwnDataTo(trace, null, false)
 
         return Pair(trace.bindingContext, statementFilterUsed)
@@ -485,7 +488,9 @@ class ResolveElementCache(
         forceResolveAnnotationsInside(property)
 
         for (accessor in property.accessors) {
-            ControlFlowInformationProvider(accessor, trace, accessor.languageVersionSettings).checkDeclaration()
+            ControlFlowInformationProvider(
+                    accessor, trace, accessor.languageVersionSettings, PlatformDiagnosticSuppressor.Default
+            ).checkDeclaration()
         }
 
         return trace
