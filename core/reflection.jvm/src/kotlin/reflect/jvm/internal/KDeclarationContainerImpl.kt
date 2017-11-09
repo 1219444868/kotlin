@@ -16,11 +16,11 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.*
-import org.jetbrains.kotlin.descriptors.impl.DeclarationDescriptorVisitorEmptyBodies
-import org.jetbrains.kotlin.load.java.JvmAbi
-import org.jetbrains.kotlin.name.Name
-import org.jetbrains.kotlin.resolve.scopes.MemberScope
+import kotlin.reflect.jvm.internal.impl.descriptors.*
+import kotlin.reflect.jvm.internal.impl.descriptors.impl.DeclarationDescriptorVisitorEmptyBodies
+import kotlin.reflect.jvm.internal.impl.load.java.JvmAbi
+import kotlin.reflect.jvm.internal.impl.name.Name
+import kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope
 import java.lang.reflect.Constructor
 import java.lang.reflect.Method
 import kotlin.jvm.internal.ClassBasedDeclarationContainer

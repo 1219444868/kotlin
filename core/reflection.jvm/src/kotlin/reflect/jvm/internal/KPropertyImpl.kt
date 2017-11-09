@@ -16,13 +16,13 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.*
-import org.jetbrains.kotlin.descriptors.annotations.Annotations
-import org.jetbrains.kotlin.load.java.JvmAbi
-import org.jetbrains.kotlin.resolve.DescriptorFactory
-import org.jetbrains.kotlin.resolve.DescriptorUtils
-import org.jetbrains.kotlin.serialization.jvm.JvmProtoBufUtil
-import org.jetbrains.kotlin.types.TypeUtils
+import kotlin.reflect.jvm.internal.impl.descriptors.*
+import kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations
+import kotlin.reflect.jvm.internal.impl.load.java.JvmAbi
+import kotlin.reflect.jvm.internal.impl.resolve.DescriptorFactory
+import kotlin.reflect.jvm.internal.impl.resolve.DescriptorUtils
+import kotlin.reflect.jvm.internal.impl.serialization.jvm.JvmProtoBufUtil
+import kotlin.reflect.jvm.internal.impl.types.TypeUtils
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 import kotlin.jvm.internal.CallableReference

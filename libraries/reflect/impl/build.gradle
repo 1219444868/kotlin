@@ -1,0 +1,86 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+description = 'Internal implementation of kotlin-reflect. Please do not add dependency on this project'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:${property("versions.shadow")}"
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
+
+configureJavaOnlyJvm6Project(project)
+
+def core = "${rootDir}/core"
+def annotationsSrc = "${buildDir}/annotations"
+
+sourceSets {
+    main {
+        java {
+            srcDir annotationsSrc
+        }
+    }
+}
+
+configurations {
+    shadows { transitive = false }
+}
+
+dependencies {
+    shadows project(':core:descriptors')
+    shadows project(':core:descriptors.jvm')
+    shadows project(':core:deserialization')
+    shadows project(':core:descriptors.runtime')
+    shadows project(':core:util.runtime')
+    shadows 'javax.inject:javax.inject:1'
+    shadows project(path: ':custom-dependencies:protobuf-lite', configuration: 'default')
+}
+
+task copyAnnotations(type: Sync) {
+    // copy just two missing annotations
+    from("${core}/runtime.jvm/src") {
+        include "**/Mutable.java"
+        include "**/ReadOnly.java"
+    }
+    into(annotationsSrc)
+    includeEmptyDirs false
+}
+
+compileJava {
+    dependsOn copyAnnotations
+}
+
+task reflectShadowJar(type: ShadowJar, dependsOn: ':custom-dependencies:protobuf-lite:prepare') {
+    manifestAttributes(manifest, project, 'Main')
+
+    from(sourceSets.main.output)
+    from(project(":core:descriptors.jvm").sourceSets.main.resources) {
+        include 'META-INF/services/**'
+    }
+    from(project(":core:deserialization").sourceSets.main.resources) {
+        include 'META-INF/services/**'
+    }
+
+    transform(new KotlinModuleShadowTransformer(logger))
+
+    configurations = [project.configurations.shadows]
+    relocate 'org.jetbrains.kotlin', 'kotlin.reflect.jvm.internal.impl'
+    relocate 'javax.inject', 'kotlin.reflect.jvm.internal.impl.javax.inject'
+    mergeServiceFiles()
+}
+
+def mainArchiveName = "${archivesBaseName}-${project.version}.jar"
+def outputJarPath = "${libsDir}/${mainArchiveName}"
+
+def artifactJar = [file: file(outputJarPath), builtBy: reflectShadowJar, name: archivesBaseName]
+
+jar.enabled false
+
+artifacts {
+    archives artifactJar
+}

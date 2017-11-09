@@ -16,8 +16,8 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.ClassDescriptor
-import org.jetbrains.kotlin.descriptors.FunctionDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor
 import java.lang.reflect.Constructor
 import java.lang.reflect.Member
 import java.lang.reflect.Method

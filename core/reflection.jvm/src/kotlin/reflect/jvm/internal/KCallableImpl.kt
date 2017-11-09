@@ -16,9 +16,9 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.CallableMemberDescriptor
-import org.jetbrains.kotlin.descriptors.Modality
-import org.jetbrains.kotlin.load.java.descriptors.JavaCallableMemberDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.CallableMemberDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.Modality
+import kotlin.reflect.jvm.internal.impl.load.java.descriptors.JavaCallableMemberDescriptor
 import java.lang.reflect.Type
 import java.util.*
 import kotlin.reflect.*

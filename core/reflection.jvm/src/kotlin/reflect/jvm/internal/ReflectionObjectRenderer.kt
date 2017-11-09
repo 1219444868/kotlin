@@ -16,10 +16,10 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.*
-import org.jetbrains.kotlin.renderer.DescriptorRenderer
-import org.jetbrains.kotlin.types.KotlinType
-import org.jetbrains.kotlin.types.Variance
+import kotlin.reflect.jvm.internal.impl.descriptors.*
+import kotlin.reflect.jvm.internal.impl.renderer.DescriptorRenderer
+import kotlin.reflect.jvm.internal.impl.types.KotlinType
+import kotlin.reflect.jvm.internal.impl.types.Variance
 import kotlin.reflect.KParameter
 
 internal object ReflectionObjectRenderer {

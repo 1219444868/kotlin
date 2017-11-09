@@ -46,6 +46,7 @@ dependencies {
 //    compile("org.jetbrains.kotlin:kotlin-gradle-plugin:${rootProject.extra["bootstrap_kotlin_version"]}")
     compile("com.github.jengelman.gradle.plugins:shadow:${property("versions.shadow")}")
     compile("org.ow2.asm:asm-all:6.0_BETA")
+    compile("com.google.protobuf:protobuf-java:2.6.1")
 }
 
 samWithReceiver {

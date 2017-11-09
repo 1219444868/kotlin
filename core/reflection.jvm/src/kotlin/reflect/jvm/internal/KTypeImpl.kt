@@ -16,12 +16,12 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.ClassDescriptor
-import org.jetbrains.kotlin.descriptors.TypeAliasDescriptor
-import org.jetbrains.kotlin.descriptors.TypeParameterDescriptor
-import org.jetbrains.kotlin.types.KotlinType
-import org.jetbrains.kotlin.types.TypeUtils
-import org.jetbrains.kotlin.types.Variance
+import kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.TypeAliasDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor
+import kotlin.reflect.jvm.internal.impl.types.KotlinType
+import kotlin.reflect.jvm.internal.impl.types.TypeUtils
+import kotlin.reflect.jvm.internal.impl.types.Variance
 import java.lang.reflect.GenericArrayType
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type

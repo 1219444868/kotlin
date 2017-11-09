@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 description = 'Kotlin Full Reflection Library'
 
 buildscript {
@@ -8,104 +6,36 @@ buildscript {
     }
     dependencies {
         classpath 'net.sf.proguard:proguard-gradle:5.2.1'
-        classpath "com.github.jengelman.gradle.plugins:shadow:${property("versions.shadow")}"
     }
 }
 
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'kotlin'
-
-configureJvm6Project(project)
 configurePublishing(project)
 
-
 def core = "${rootDir}/core"
-def annotationsSrc = "${buildDir}/annotations"
 def relocatedCoreSrc = "${buildDir}/core-relocated"
-
-sourceSets {
-    main {
-        java {
-            srcDir annotationsSrc
-            srcDir "${core}/reflection.jvm/src"
-        }
-    }
-}
 
 configurations {
     proguardDeps
-    shadows { transitive = false }
     compileOnly.extendsFrom(shadows)
     mainJar
+    combine
 }
 
 dependencies {
     proguardDeps project(':kotlin-stdlib')
-    shadows project(':core:descriptors')
-    shadows project(':core:descriptors.jvm')
-    shadows project(':core:deserialization')
-    shadows project(':core:descriptors.runtime')
-    shadows project(':core:util.runtime')
-    shadows 'javax.inject:javax.inject:1'
-    shadows project(path: ':custom-dependencies:protobuf-lite', configuration: 'default')
 
-    compile project(':kotlin-stdlib')
-    compileOnly project(path: ':custom-dependencies:protobuf-lite', configuration: 'default')
+    combine project(':kotlin-reflect-impl')
+    combine project(":kotlin-reflect-api")
 }
 
-task copyAnnotations(type: Sync) {
-    // copy just two missing annotations
-    from("${core}/runtime.jvm/src") {
-        include "**/Mutable.java"
-        include "**/ReadOnly.java"
-    }
-    into(annotationsSrc)
-    includeEmptyDirs false
-}
-
-
-compileJava {
-    dependsOn copyAnnotations
-    // options.compilerArgs.addAll(["-Xlint:unchecked"])
-}
-
-compileKotlin {
-    dependsOn copyAnnotations
-    dependsOn ':custom-dependencies:protobuf-lite:prepare'
-    kotlinOptions {
-        freeCompilerArgs = ["-version",
-                            "-Xallow-kotlin-package",
-                            "-Xnormalize-constructor-calls=enable",
-                            "-module-name", "kotlin-reflection",
-                            "-Xdump-declarations-to=${buildDir}/reflect-declarations.json"]
-    }
-}
-
-kotlin.experimental.coroutines "enable"
-
-
-task reflectShadowJar(type: ShadowJar) {
-    classifier = 'shadow'
-    version = null
-    manifestAttributes(manifest, project, 'Main')
-
-    from(sourceSets.main.output)
-    from(project(":core:descriptors.jvm").sourceSets.main.resources) {
-        include 'META-INF/services/**'
-    }
-    from(project(":core:deserialization").sourceSets.main.resources) {
-        include 'META-INF/services/**'
-    }
-
-    configurations = [project.configurations.shadows]
-    relocate 'org.jetbrains.kotlin', 'kotlin.reflect.jvm.internal.impl'
-    relocate 'javax.inject', 'kotlin.reflect.jvm.internal.impl.javax.inject'
-    mergeServiceFiles()
+task combineApiAndImpl(type: Jar, dependsOn: ':kotlin-reflect-api:jar') {
+    classifier = "combined"
+    from { configurations.combine.collect { zipTree(it) } }
 }
 
 task stripMetadata {
-    dependsOn reflectShadowJar
-    def inputJar = reflectShadowJar.archivePath
+    dependsOn combineApiAndImpl
+    def inputJar = combineApiAndImpl.outputs.files.first()
     def outputJar = new File("${libsDir}/kotlin-reflect-stripped.jar")
     inputs.file(inputJar)
     outputs.file(outputJar)
@@ -159,8 +89,6 @@ task relocateCoreSources(type: Copy) {
     }
 }
 
-jar.enabled false
-
 task relocatedSourcesJar(type: Jar) {
     dependsOn relocateCoreSources
     classifier 'sources'
@@ -179,7 +107,6 @@ check.dependsOn(dexMethodCount)
 
 artifacts {
     mainJar artifactJar
-    runtime artifactJar
     archives artifactJar
     archives relocatedSourcesJar
     archives javadocJar

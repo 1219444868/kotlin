@@ -19,10 +19,10 @@
 
 package kotlin.reflect.full
 
-import org.jetbrains.kotlin.descriptors.ConstructorDescriptor
-import org.jetbrains.kotlin.types.TypeSubstitutor
-import org.jetbrains.kotlin.types.Variance
-import org.jetbrains.kotlin.utils.DFS
+import kotlin.reflect.jvm.internal.impl.descriptors.ConstructorDescriptor
+import kotlin.reflect.jvm.internal.impl.types.TypeSubstitutor
+import kotlin.reflect.jvm.internal.impl.types.Variance
+import kotlin.reflect.jvm.internal.impl.utils.DFS
 import kotlin.reflect.*
 import kotlin.reflect.jvm.internal.KCallableImpl
 import kotlin.reflect.jvm.internal.KClassImpl

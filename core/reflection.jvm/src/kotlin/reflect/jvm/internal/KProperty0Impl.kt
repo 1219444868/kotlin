@@ -16,7 +16,7 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.PropertyDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty0

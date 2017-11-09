@@ -16,8 +16,8 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.TypeParameterDescriptor
-import org.jetbrains.kotlin.types.Variance
+import kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor
+import kotlin.reflect.jvm.internal.impl.types.Variance
 import kotlin.reflect.KType
 import kotlin.reflect.KTypeParameter
 import kotlin.reflect.KVariance

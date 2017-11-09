@@ -1,0 +1,30 @@
+description = ''
+
+apply plugin: 'kotlin'
+
+configureJvm6Project(project)
+
+sourceSets {
+    main {
+        java {
+            srcDir "${rootDir}/core/reflection.jvm/src"
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(':kotlin-stdlib')
+    compileOnly project(path: ':kotlin-reflect-impl', configuration: 'archives')
+}
+
+compileKotlin {
+    dependsOn ':kotlin-reflect-impl:reflectShadowJar'
+
+    kotlinOptions {
+        freeCompilerArgs = ["-version",
+                            "-Xallow-kotlin-package",
+                            "-Xnormalize-constructor-calls=enable",
+                            "-module-name", "kotlin-reflection",
+                            "-Xdump-declarations-to=${buildDir}/reflect-declarations.json"] // TODO json file path
+    }
+}

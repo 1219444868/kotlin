@@ -16,7 +16,7 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.ClassifierDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.ClassifierDescriptor
 
 internal interface KClassifierImpl {
     val descriptor: ClassifierDescriptor

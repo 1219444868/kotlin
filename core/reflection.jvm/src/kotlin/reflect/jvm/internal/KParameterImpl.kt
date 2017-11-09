@@ -16,9 +16,9 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.ParameterDescriptor
-import org.jetbrains.kotlin.descriptors.ValueParameterDescriptor
-import org.jetbrains.kotlin.resolve.descriptorUtil.hasDefaultValue
+import kotlin.reflect.jvm.internal.impl.descriptors.ParameterDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor
+import kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.hasDefaultValue
 import kotlin.reflect.KParameter
 import kotlin.reflect.KType
 

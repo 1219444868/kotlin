@@ -17,7 +17,7 @@
 @file:JvmName("ReflectJvmMapping")
 package kotlin.reflect.jvm
 
-import org.jetbrains.kotlin.load.kotlin.header.KotlinClassHeader
+import kotlin.reflect.jvm.internal.impl.load.kotlin.header.KotlinClassHeader
 import java.lang.reflect.*
 import java.util.*
 import kotlin.reflect.*

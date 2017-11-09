@@ -17,9 +17,9 @@
 @file:JvmName("KTypes")
 package kotlin.reflect.full
 
-import org.jetbrains.kotlin.types.TypeUtils
-import org.jetbrains.kotlin.types.isFlexible
-import org.jetbrains.kotlin.types.typeUtil.isSubtypeOf
+import kotlin.reflect.jvm.internal.impl.types.TypeUtils
+import kotlin.reflect.jvm.internal.impl.types.isFlexible
+import kotlin.reflect.jvm.internal.impl.types.typeUtil.isSubtypeOf
 import kotlin.reflect.*
 import kotlin.reflect.jvm.internal.KTypeImpl
 

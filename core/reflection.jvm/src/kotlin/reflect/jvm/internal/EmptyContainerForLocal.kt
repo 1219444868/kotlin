@@ -16,10 +16,10 @@
 
 package kotlin.reflect.jvm.internal
 
-import org.jetbrains.kotlin.descriptors.ConstructorDescriptor
-import org.jetbrains.kotlin.descriptors.FunctionDescriptor
-import org.jetbrains.kotlin.descriptors.PropertyDescriptor
-import org.jetbrains.kotlin.name.Name
+import kotlin.reflect.jvm.internal.impl.descriptors.ConstructorDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor
+import kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor
+import kotlin.reflect.jvm.internal.impl.name.Name
 import kotlin.reflect.KCallable
 
 internal object EmptyContainerForLocal : KDeclarationContainerImpl() {

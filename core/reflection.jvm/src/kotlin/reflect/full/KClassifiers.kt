@@ -17,8 +17,8 @@
 @file:JvmName("KClassifiers")
 package kotlin.reflect.full
 
-import org.jetbrains.kotlin.descriptors.annotations.Annotations
-import org.jetbrains.kotlin.types.*
+import kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations
+import kotlin.reflect.jvm.internal.impl.types.*
 import kotlin.reflect.*
 import kotlin.reflect.jvm.internal.KClassifierImpl
 import kotlin.reflect.jvm.internal.KTypeImpl

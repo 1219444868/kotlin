@@ -18,13 +18,13 @@
 
 package kotlin.reflect.jvm
 
-import org.jetbrains.kotlin.load.kotlin.JvmNameResolver
-import org.jetbrains.kotlin.serialization.ProtoBuf
-import org.jetbrains.kotlin.serialization.deserialization.MemberDeserializer
-import org.jetbrains.kotlin.serialization.deserialization.TypeTable
-import org.jetbrains.kotlin.serialization.jvm.BitEncoding
-import org.jetbrains.kotlin.serialization.jvm.JvmProtoBuf
-import org.jetbrains.kotlin.serialization.jvm.JvmProtoBufUtil
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmNameResolver
+import kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf
+import kotlin.reflect.jvm.internal.impl.serialization.deserialization.MemberDeserializer
+import kotlin.reflect.jvm.internal.impl.serialization.deserialization.TypeTable
+import kotlin.reflect.jvm.internal.impl.serialization.jvm.BitEncoding
+import kotlin.reflect.jvm.internal.impl.serialization.jvm.JvmProtoBuf
+import kotlin.reflect.jvm.internal.impl.serialization.jvm.JvmProtoBufUtil
 import kotlin.reflect.KFunction
 import kotlin.reflect.jvm.internal.EmptyContainerForLocal
 import kotlin.reflect.jvm.internal.KFunctionImpl
