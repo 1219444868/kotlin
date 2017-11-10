@@ -130,9 +130,9 @@ public fun File.forEachBlock(action: (buffer: ByteArray, bytesRead: Int) -> Unit
 public fun File.forEachBlock(blockSize: Int, action: (buffer: ByteArray, bytesRead: Int) -> Unit): Unit {
     val arr = ByteArray(blockSize.coerceAtLeast(MINIMUM_BLOCK_SIZE))
 
-    inputStream().use {
+    inputStream().use { input ->
         do {
-            val size = it.read(arr)
+            val size = input.read(arr)
             if (size <= 0) {
                 break
             } else {
@@ -152,7 +152,8 @@ public fun File.forEachBlock(blockSize: Int, action: (buffer: ByteArray, bytesRe
  * @param action function to process file lines.
  */
 public fun File.forEachLine(charset: Charset = Charsets.UTF_8, action: (line: String) -> Unit): Unit {
-    reader(charset).forEachLine(action)
+    // Note: close is called at forEachLine
+    BufferedReader(InputStreamReader(FileInputStream(this), charset)).forEachLine(action)
 }
 
 /**
@@ -180,7 +181,7 @@ public inline fun File.outputStream(): FileOutputStream {
  * @return list of file lines.
  */
 public fun File.readLines(charset: Charset = Charsets.UTF_8): List<String> {
-    val result = arrayListOf<String>()
+    val result = ArrayList<String>()
     forEachLine(charset) { result.add(it); }
     return result
 }
@@ -192,5 +193,6 @@ public fun File.readLines(charset: Charset = Charsets.UTF_8): List<String> {
  * @param charset character set to use. By default uses UTF-8 charset.
  * @return the value returned by [block].
  */
+@RequireKotlin("1.2", versionKind = RequireKotlinVersionKind.COMPILER_VERSION, message = "Requires newer compiler version to be inlined correctly.")
 public inline fun <T> File.useLines(charset: Charset = Charsets.UTF_8, block: (Sequence<String>) -> T): T =
-        reader(charset).useLines(block)
+        bufferedReader(charset).use { block(it.lineSequence()) }
